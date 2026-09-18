@@ -1,0 +1,87 @@
+{
+  "brand": {
+    "name": "Doughnut Shop",
+    "tagline": "Donas artesanales",
+    "homeLabel": "Inicio de Doughnut Shop"
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "menu": "Menú",
+    "boxes": "Cajas",
+    "contact": "Contacto",
+    "order": "Haz tu pedido",
+    "toggle": "Abrir o cerrar el menú"
+  },
+  "language": {
+    "label": "Elegir idioma",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "hero": {
+    "sectionLabel": "Donas recién horneadas",
+    "imageAlt": "Donas artesanales sobre el mostrador de la panadería",
+    "eyebrow": "Recién horneadas cada mañana",
+    "title": "Vale la pena madrugar por estas donas.",
+    "copy": "Horneamos pocas a la vez, preparamos aquí nuestros glaseados y cambiamos los rellenos según la temporada. Ven por una o llévate una caja para compartir con café.",
+    "viewMenu": "Ver menú",
+    "pickup": "Ordenar para recoger",
+    "cardLabel": "Especial de hoy",
+    "drop": "Hoy recomendamos",
+    "featured": "Frambuesa con pistacho",
+    "availability": "Disponible hasta agotar existencias"
+  },
+  "intro": {
+    "label": "Lo mejor de la tienda",
+    "eyebrow": "Por esto siempre vuelven",
+    "title": "Sabores frescos, masa suave y bordes crujientes. Nada de donas olvidadas en la vitrina.",
+    "stats": [
+      { "value": "6:30", "label": "sale la primera tanda" },
+      { "value": "18", "label": "sabores cada día" },
+      { "value": "24h", "label": "para pedir una caja personalizada" }
+    ]
+  },
+  "menu": {
+    "eyebrow": "Nuestras favoritas",
+    "title": "¿Cuál se te antoja?",
+    "items": [
+      { "name": "Frambuesa con pistacho", "description": "Glaseado de frutos rojos, pistacho triturado y trocitos de frambuesa.", "tag": "La favorita" },
+      { "name": "Chocolate oscuro", "description": "Ganache de cacao, virutas de chocolate y un toque de sal de mar.", "tag": "Chocolate intenso" },
+      { "name": "Vainilla brûlée", "description": "Glaseado de vainilla de Madagascar, migas tostadas y azúcar caramelizada.", "tag": "La clásica" },
+      { "name": "Fresa con crema", "description": "Rellena de crema batida y mermelada de fresa, con azúcar en polvo.", "tag": "Con relleno" },
+      { "name": "Maple con mantequilla dorada", "description": "Glaseado de maple, migas de mantequilla dorada y nuez pecana tostada.", "tag": "Solo el fin de semana" },
+      { "name": "Limón con merengue", "description": "Crema de limón, merengue tostado y azúcar con un toque cítrico.", "tag": "Ligera y fresca" }
+    ]
+  },
+  "boxes": {
+    "eyebrow": "Cajas para compartir",
+    "title": "Para cumpleaños, reuniones por la mañana o porque se te antojó llevar algo rico.",
+    "items": [
+      "Media docena de la casa",
+      "Docena para la oficina con café",
+      "Bandeja de mini donas para fiestas"
+    ],
+    "action": "Comenzar un pedido"
+  },
+  "contact": {
+    "eyebrow": "Ven o escríbenos",
+    "title": "Dinos qué te guardamos.",
+    "copy": "Dinos qué se te antoja y a qué hora pasas. Puede ser una dona o una caja completa.",
+    "hours": "Horario",
+    "hoursValue": "Mar-Dom, 6:30 a. m.-2:00 p. m.",
+    "phone": "Teléfono",
+    "pickup": "Recoge en",
+    "address": "24 Sprinkle Ave, Sweet City"
+  },
+  "form": {
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "email": "Correo",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "message": "Mensaje",
+    "messagePlaceholder": "Escribe aquí tu pedido o tu pregunta",
+    "submit": "Enviar",
+    "sending": "Enviando...",
+    "success": "¡Gracias! Te responderemos pronto.",
+    "error": "No pudimos enviar el mensaje. Llámanos a la tienda para hacer tu pedido."
+  }
+}

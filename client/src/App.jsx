@@ -1,62 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import heroImage from './assets/generated/doughnut-hero.png';
+import en from './locales/en.json';
+import es from './locales/es.json';
 
-const doughnuts = [
-  {
-    name: 'Raspberry Pistachio',
-    description: 'Pink berry glaze, crushed pistachio, freeze-dried raspberry.',
-    price: '$4.75',
-    tag: 'House favorite',
-    accent: 'berry',
-  },
-  {
-    name: 'Midnight Chocolate',
-    description: 'Dark cocoa ganache, chocolate curls, sea salt finish.',
-    price: '$4.50',
-    tag: 'Rich',
-    accent: 'cocoa',
-  },
-  {
-    name: 'Vanilla Crumb Brulee',
-    description: 'Madagascar vanilla glaze, toasted crumb, caramelized sugar.',
-    price: '$4.25',
-    tag: 'Classic',
-    accent: 'vanilla',
-  },
-  {
-    name: 'Strawberry Cream Bomb',
-    description: 'Whipped cream filling, strawberry jam, powdered sugar.',
-    price: '$5.25',
-    tag: 'Filled',
-    accent: 'cream',
-  },
-  {
-    name: 'Brown Butter Maple',
-    description: 'Maple glaze, brown butter crumble, roasted pecans.',
-    price: '$4.95',
-    tag: 'Weekend',
-    accent: 'maple',
-  },
-  {
-    name: 'Lemon Meringue Cloud',
-    description: 'Lemon curd, toasted meringue, citrus sugar sparkle.',
-    price: '$5.00',
-    tag: 'Bright',
-    accent: 'lemon',
-  },
-];
+const translations = { en, es };
 
-const boxes = [
-  'Half dozen signature box',
-  'Office dozen with coffee traveler',
-  'Mini doughnut party tray',
+const products = [
+  { price: '$4.75', accent: 'berry' },
+  { price: '$4.50', accent: 'cocoa' },
+  { price: '$4.25', accent: 'vanilla' },
+  { price: '$5.25', accent: 'cream' },
+  { price: '$4.95', accent: 'maple' },
+  { price: '$5.00', accent: 'lemon' },
 ];
 
 function App() {
+  const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'en');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [menuOpen, setMenuOpen] = useState(false);
   const [status, setStatus] = useState('');
+  const t = translations[language] || translations.en;
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    localStorage.setItem('language', language);
+  }, [language]);
 
   const handleChange = (field) => (event) => {
     setForm({ ...form, [field]: event.target.value });
@@ -64,7 +33,7 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setStatus('Sending...');
+    setStatus(t.form.sending);
 
     try {
       const response = await fetch('http://localhost:3001/api/contact', {
@@ -72,45 +41,70 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong.');
+        throw new Error('Request failed');
       }
 
-      setStatus(data.message || 'Thanks! We will get back to you soon.');
+      setStatus(t.form.success);
       setForm({ name: '', email: '', message: '' });
-    } catch (error) {
-      setStatus(error.message || 'We could not send your message. Please call the shop instead.');
+    } catch {
+      setStatus(t.form.error);
     }
   };
 
   const closeMenu = () => setMenuOpen(false);
+  const changeLanguage = (nextLanguage) => {
+    setLanguage(nextLanguage);
+    setStatus('');
+    closeMenu();
+  };
 
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#home" onClick={closeMenu} aria-label="Doughnut Shop home">
+        <a className="brand" href="#home" onClick={closeMenu} aria-label={t.brand.homeLabel}>
           <span className="brand-mark">DS</span>
           <span>
-            <strong>Doughnut Shop</strong>
-            <small>Small-batch bakery</small>
+            <strong>{t.brand.name}</strong>
+            <small>{t.brand.tagline}</small>
           </span>
         </a>
 
-        <nav className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
-          <a href="#menu" onClick={closeMenu}>Menu</a>
-          <a href="#boxes" onClick={closeMenu}>Boxes</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+        <nav className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label={t.nav.label}>
+          <a href="#menu" onClick={closeMenu}>{t.nav.menu}</a>
+          <a href="#boxes" onClick={closeMenu}>{t.nav.boxes}</a>
+          <a href="#contact" onClick={closeMenu}>{t.nav.contact}</a>
         </nav>
 
-        <a className="nav-cta" href="#contact">Order ahead</a>
+        <div className="language-toggle" role="group" aria-label={t.language.label}>
+          <button
+            className={language === 'en' ? 'is-active' : ''}
+            type="button"
+            aria-pressed={language === 'en'}
+            onClick={() => changeLanguage('en')}
+          >
+            <span className="language-long">{t.language.english}</span>
+            <span className="language-short">EN</span>
+          </button>
+          <button
+            className={language === 'es' ? 'is-active' : ''}
+            type="button"
+            aria-pressed={language === 'es'}
+            onClick={() => changeLanguage('es')}
+          >
+            <span className="language-long">{t.language.spanish}</span>
+            <span className="language-short">ES</span>
+          </button>
+        </div>
+
+        <a className="nav-cta" href="#contact">{t.nav.order}</a>
 
         <button
           className="menu-toggle"
           type="button"
           aria-expanded={menuOpen}
-          aria-label="Toggle navigation"
+          aria-label={t.nav.toggle}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span />
@@ -120,56 +114,53 @@ function App() {
       </header>
 
       <main>
-        <section className="hero" id="home" aria-label="Fresh artisan doughnuts">
-          <img src={heroImage} alt="Assorted artisan doughnuts on a bakery counter" />
+        <section className="hero" id="home" aria-label={t.hero.sectionLabel}>
+          <img src={heroImage} alt={t.hero.imageAlt} />
           <div className="hero-overlay" />
           <div className="hero-content">
-            <p className="eyebrow">Fresh from the oven every morning</p>
-            <h1>Doughnuts worth getting up early for.</h1>
-            <p className="hero-copy">
-              We bake in small batches, mix our own glazes, and change the fillings with
-              the seasons. Stop in for one, or take a box to share over coffee.
-            </p>
+            <p className="eyebrow">{t.hero.eyebrow}</p>
+            <h1>{t.hero.title}</h1>
+            <p className="hero-copy">{t.hero.copy}</p>
             <div className="hero-actions">
-              <a className="button primary" href="#menu">View menu</a>
-              <a className="button secondary" href="#contact">Plan a pickup</a>
+              <a className="button primary" href="#menu">{t.hero.viewMenu}</a>
+              <a className="button secondary" href="#contact">{t.hero.pickup}</a>
             </div>
           </div>
-          <div className="hero-card" aria-label="Today's bakery details">
-            <span>Today&apos;s drop</span>
-            <strong>Raspberry Pistachio</strong>
-            <small>Available until sold out</small>
+          <div className="hero-card" aria-label={t.hero.cardLabel}>
+            <span>{t.hero.drop}</span>
+            <strong>{t.hero.featured}</strong>
+            <small>{t.hero.availability}</small>
           </div>
         </section>
 
-        <section className="intro-section" aria-label="Shop highlights">
+        <section className="intro-section" aria-label={t.intro.label}>
           <div>
-            <p className="eyebrow">Why our regulars come back</p>
-            <h2>Bright flavors, soft dough, crisp edges, no sleepy pastry case.</h2>
+            <p className="eyebrow">{t.intro.eyebrow}</p>
+            <h2>{t.intro.title}</h2>
           </div>
           <div className="stats">
-            <span><strong>6:30</strong> first trays</span>
-            <span><strong>18</strong> daily flavors</span>
-            <span><strong>24h</strong> custom box notice</span>
+            {t.intro.stats.map((stat) => (
+              <span key={stat.value}><strong>{stat.value}</strong> {stat.label}</span>
+            ))}
           </div>
         </section>
 
         <section className="menu-section" id="menu">
           <div className="section-heading">
-            <p className="eyebrow">Signature menu</p>
-            <h2>What are you craving?</h2>
+            <p className="eyebrow">{t.menu.eyebrow}</p>
+            <h2>{t.menu.title}</h2>
           </div>
 
           <div className="menu-grid">
-            {doughnuts.map((item) => (
-              <article className={`menu-card ${item.accent}`} key={item.name}>
+            {t.menu.items.map((item, index) => (
+              <article className={`menu-card ${products[index].accent}`} key={products[index].accent}>
                 <div className="donut-visual" aria-hidden="true">
                   <span />
                 </div>
                 <div>
                   <div className="card-topline">
                     <span>{item.tag}</span>
-                    <strong>{item.price}</strong>
+                    <strong>{products[index].price}</strong>
                   </div>
                   <h3>{item.name}</h3>
                   <p>{item.description}</p>
@@ -181,64 +172,61 @@ function App() {
 
         <section className="order-band" id="boxes">
           <div>
-            <p className="eyebrow">Boxes & catering</p>
-            <h2>For birthdays, morning meetings, or just bringing treats.</h2>
+            <p className="eyebrow">{t.boxes.eyebrow}</p>
+            <h2>{t.boxes.title}</h2>
           </div>
           <ul>
-            {boxes.map((box) => (
+            {t.boxes.items.map((box) => (
               <li key={box}>{box}</li>
             ))}
           </ul>
-          <a className="button primary" href="#contact">Start an order</a>
+          <a className="button primary" href="#contact">{t.boxes.action}</a>
         </section>
 
         <section className="contact-section" id="contact">
           <div className="contact-copy">
-            <p className="eyebrow">Visit or write</p>
-            <h2>Tell us what to set aside.</h2>
-            <p>
-              Let us know what you would like and when you plan to pick it up,
-              whether you need one doughnut or a full box.
-            </p>
+            <p className="eyebrow">{t.contact.eyebrow}</p>
+            <h2>{t.contact.title}</h2>
+            <p>{t.contact.copy}</p>
 
             <div className="shop-details">
-              <span><strong>Hours</strong> Tue-Sun, 6:30 AM-2:00 PM</span>
-              <span><strong>Phone</strong> (555) 014-1999</span>
-              <span><strong>Pickup</strong> 24 Sprinkle Ave, Sweet City</span>
+              <span><strong>{t.contact.hours}</strong> {t.contact.hoursValue}</span>
+              <span><strong>{t.contact.phone}</strong> (555) 014-1999</span>
+              <span><strong>{t.contact.pickup}</strong> {t.contact.address}</span>
             </div>
           </div>
 
           <form className="contact-form" onSubmit={handleSubmit}>
             <label>
-              Name
+              {t.form.name}
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder={t.form.namePlaceholder}
                 required
                 value={form.name}
                 onChange={handleChange('name')}
               />
             </label>
             <label>
-              Email
+              {t.form.email}
               <input
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t.form.emailPlaceholder}
                 required
                 value={form.email}
                 onChange={handleChange('email')}
               />
             </label>
             <label>
-              Message
+              {t.form.message}
               <textarea
-                placeholder="Tell us about your order or question"
+                placeholder={t.form.messagePlaceholder}
                 required
                 value={form.message}
                 onChange={handleChange('message')}
               />
             </label>
-            <button className="button primary form-button" type="submit">Send message</button>
+            <button className="button primary form-button" type="submit">{t.form.submit}</button>
             {status && <p className="form-status" role="status">{status}</p>}
           </form>
         </section>

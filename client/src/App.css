@@ -306,6 +306,11 @@
   margin-bottom: 2rem;
 }
 
+.section-heading h2 {
+  margin-left: auto;
+  text-align: right;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -552,6 +557,12 @@
 }
 
 @media (max-width: 680px) {
+  .section-heading h2 {
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
   .brand small {
     display: none;
   }

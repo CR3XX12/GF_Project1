@@ -4,7 +4,7 @@ const handleContactForm = (req, res) => {
 
     // TODO: save to database, file, email service, etc.
 
-    res.json({ message: 'Thank you for contacting us!'});
+    res.json({ message: 'Thanks! We will get back to you soon.'});
     
 };
 

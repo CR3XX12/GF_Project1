@@ -78,10 +78,10 @@ function App() {
         throw new Error(data.message || 'Something went wrong.');
       }
 
-      setStatus(data.message || 'Thanks! We will be in touch soon.');
+      setStatus(data.message || 'Thanks! We will get back to you soon.');
       setForm({ name: '', email: '', message: '' });
     } catch (error) {
-      setStatus(error.message || 'Could not send right now. Please call the shop.');
+      setStatus(error.message || 'We could not send your message. Please call the shop instead.');
     }
   };
 
@@ -124,11 +124,11 @@ function App() {
           <img src={heroImage} alt="Assorted artisan doughnuts on a bakery counter" />
           <div className="hero-overlay" />
           <div className="hero-content">
-            <p className="eyebrow">Baked fresh every morning</p>
-            <h1>Joyful doughnuts with a grown-up bakery finish.</h1>
+            <p className="eyebrow">Fresh from the oven every morning</p>
+            <h1>Doughnuts worth getting up early for.</h1>
             <p className="hero-copy">
-              Small batches, real glazes, seasonal fillings, and coffee that keeps up.
-              Swing by for one or build a box that disappears before lunch.
+              We bake in small batches, mix our own glazes, and change the fillings with
+              the seasons. Stop in for one, or take a box to share over coffee.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#menu">View menu</a>
@@ -144,7 +144,7 @@ function App() {
 
         <section className="intro-section" aria-label="Shop highlights">
           <div>
-            <p className="eyebrow">Why regulars stop in</p>
+            <p className="eyebrow">Why our regulars come back</p>
             <h2>Bright flavors, soft dough, crisp edges, no sleepy pastry case.</h2>
           </div>
           <div className="stats">
@@ -157,7 +157,7 @@ function App() {
         <section className="menu-section" id="menu">
           <div className="section-heading">
             <p className="eyebrow">Signature menu</p>
-            <h2>Pick your mood.</h2>
+            <h2>What are you craving?</h2>
           </div>
 
           <div className="menu-grid">
@@ -182,7 +182,7 @@ function App() {
         <section className="order-band" id="boxes">
           <div>
             <p className="eyebrow">Boxes & catering</p>
-            <h2>Built for birthdays, morning meetings, and “I brought treats.”</h2>
+            <h2>For birthdays, morning meetings, or just bringing treats.</h2>
           </div>
           <ul>
             {boxes.map((box) => (
@@ -195,10 +195,10 @@ function App() {
         <section className="contact-section" id="contact">
           <div className="contact-copy">
             <p className="eyebrow">Visit or write</p>
-            <h2>We will save you the good ones.</h2>
+            <h2>Tell us what to set aside.</h2>
             <p>
-              Tell us what you need, when you need it, and whether this is a
-              casual craving or a full-box occasion.
+              Let us know what you would like and when you plan to pick it up,
+              whether you need one doughnut or a full box.
             </p>
 
             <div className="shop-details">

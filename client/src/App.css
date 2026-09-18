@@ -568,7 +568,9 @@
   }
 
   .hero {
-    min-height: 720px;
+    display: block;
+    min-height: 0;
+    padding-bottom: 1rem;
   }
 
   .hero-overlay {
@@ -577,9 +579,8 @@
   }
 
   .hero-content {
-    align-self: start;
     margin: 0 auto;
-    padding-top: 4rem;
+    padding: 4rem 0 0;
   }
 
   .hero h1 {
@@ -588,8 +589,9 @@
   }
 
   .hero-card {
-    left: 1rem;
-    right: auto;
+    position: static;
+    width: calc(100% - 2rem);
+    margin: 1.25rem auto 0;
   }
 
   .stats,
